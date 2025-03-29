@@ -1,7 +1,7 @@
 # coding:utf-8
 
 __project__ = "xargcomplete"
-__version__ = "0.1.alpha.1"
+__version__ = "0.1"
 __urlhome__ = "https://github.com/bondbox/xargcomplete/"
 __description__ = "Tab completion management"
 
