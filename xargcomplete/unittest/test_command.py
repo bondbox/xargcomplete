@@ -30,11 +30,13 @@ class TestCommand(unittest.TestCase):
         self.assertEqual(command.main(["enable"]), 123)
 
     @mock.patch.object(command.Bash, "update", mock.MagicMock())
-    def test_update(self):
-        self.assertEqual(command.main(["update"]), 0)
-
-    @mock.patch.object(command.shutil, "which", mock.MagicMock(return_value=None))  # noqa:E501
-    def test_update_which_None(self):
+    @mock.patch.object(command.shutil, "which")
+    @mock.patch.object(command, "Collections")
+    def test_update(self, mock_collections, mock_which):
+        fake_collections = mock.MagicMock()
+        fake_collections.cmds = ["test", "unittest"]
+        mock_collections.side_effect = [fake_collections]
+        mock_which.side_effect = [None, "/bin/unittest"]
         self.assertEqual(command.main(["update"]), 0)
 
     @mock.patch.object(command.Bash, "list", mock.MagicMock(return_value={"test"}))  # noqa:E501

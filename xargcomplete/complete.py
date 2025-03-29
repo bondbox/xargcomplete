@@ -79,7 +79,7 @@ class Collections:
     def __init__(self):
         if not self.__INITIALIZED:
             self.__cmds: Set[str] = set()
-            for _pkg in tuple({"argcomplete", command_project}):
+            for _pkg in tuple({"argcomplete", "xarg-python", "xkits", command_project}):  # noqa:E501
                 for _req in set(self.get_package_info(_pkg).required_by):
                     config = ConfigParser()
                     package_info = self.get_package_info(_req)
