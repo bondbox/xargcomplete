@@ -94,7 +94,7 @@ def run_cmd_remove(cmds: Command) -> int:
         assert isinstance(list_commands, list)
         for cmd in Bash.list():
             if cmd in list_commands:
-                continue
+                continue  # pragma: no cover
             if shutil.which(cmd) is None:
                 list_commands.append(cmd)
     for cmd in set(list_commands):
@@ -146,8 +146,8 @@ def add_cmd(_arg: ArgParser):
                  add_cmd_list)
 def run_cmd(cmds: Command) -> int:
     if sys.version_info < (3, 8):
-        cmds.logger.error("Require Python>=3.8")
-        return EPERM
+        cmds.logger.error("Require Python>=3.8")  # pragma: no cover
+        return EPERM  # pragma: no cover
     return 0
 
 
