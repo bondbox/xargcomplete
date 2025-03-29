@@ -18,25 +18,25 @@ from xargcomplete.attribute import __project__
 class Bash:
     USER_COMPLETION_CFG = "~/.bash_completion"
     USER_COMPLETION_DIR = "~/.bash_completion.d"
-
-    @classmethod
-    def enable(cls):
-        bash_completion_path = os.path.expanduser(cls.USER_COMPLETION_CFG)
-        bash_completion_hook = os.path.expanduser(cls.USER_COMPLETION_DIR)
-        bash_completion_code = """
+    COMPLETION_PATH = os.path.expanduser(USER_COMPLETION_CFG)
+    COMPLETION_HOOK = os.path.expanduser(USER_COMPLETION_DIR)
+    COMPLETION_CODE = """
 for bcfile in ~/.bash_completion.d/* ; do
   source ${bcfile}
 done
 """
-        if not os.path.exists(bash_completion_hook):
-            os.makedirs(bash_completion_hook)
 
-        with open(bash_completion_path, "r", encoding="utf-8") as fh:
-            if bash_completion_code in fh.read():
+    @classmethod
+    def enable(cls):
+        if not os.path.exists(cls.COMPLETION_HOOK):
+            os.makedirs(cls.COMPLETION_HOOK)
+
+        with open(cls.COMPLETION_PATH, "r", encoding="utf-8") as fh:
+            if cls.COMPLETION_CODE in fh.read():
                 return
 
-        with open(bash_completion_path, "a", encoding="utf-8") as fh:
-            fh.write(f"\n{bash_completion_code}\n")
+        with open(cls.COMPLETION_PATH, "a", encoding="utf-8") as fh:
+            fh.write(f"\n{cls.COMPLETION_CODE}\n")
 
         cls.update(__project__)
 

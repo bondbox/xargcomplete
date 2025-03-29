@@ -23,6 +23,7 @@ class TestCommand(unittest.TestCase):
         pass
 
     @mock.patch.object(command.os, "system")
+    @mock.patch.object(command.Bash, "enable", mock.MagicMock())
     def test_enable(self, mock_system):
         mock_system.side_effect = [0, 123]
         self.assertEqual(command.main(["enable"]), 0)
@@ -36,14 +37,19 @@ class TestCommand(unittest.TestCase):
     def test_update_which_None(self):
         self.assertEqual(command.main(["update"]), 0)
 
+    @mock.patch.object(command.Bash, "list", mock.MagicMock(return_value={"test"}))  # noqa:E501
     @mock.patch.object(command.Bash, "remove", mock.MagicMock())
     def test_remove(self):
         self.assertEqual(command.main(["remove"]), 0)
 
+    @mock.patch.object(command.shutil, "which", mock.MagicMock(side_effect=[None]))  # noqa:E501
+    @mock.patch.object(command.Bash, "list", mock.MagicMock(return_value={"test"}))  # noqa:E501
     @mock.patch.object(command.Bash, "remove", mock.MagicMock())
     def test_remove_auto_clean(self):
         self.assertEqual(command.main(["remove", "--auto-clean"]), 0)
 
+    @mock.patch.object(command.shutil, "which", mock.MagicMock(side_effect=["/bin/test"]))  # noqa:E501
+    @mock.patch.object(command.Bash, "list", mock.MagicMock(return_value={"test"}))  # noqa:E501
     def test_list(self):
         self.assertEqual(command.main(["list"]), 0)
 
