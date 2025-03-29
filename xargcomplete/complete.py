@@ -4,7 +4,7 @@ from base64 import b16decode
 from base64 import b16encode
 from configparser import ConfigParser
 import os
-from typing import Iterable
+from typing import Iterator
 from typing import Optional
 from typing import Set
 
@@ -77,17 +77,19 @@ class Collections:
     __INITIALIZED: bool = False
 
     def __init__(self):
-        if not self.__INITIALIZED:
+        if not self.__INITIALIZED:  # pylint: disable=too-many-nested-blocks
             self.__cmds: Set[str] = set()
-            for _pkg in tuple({"argcomplete", "xarg-python", "xkits", command_project}):  # noqa:E501
-                for _req in set(self.get_package_info(_pkg).required_by):
-                    config = ConfigParser()
-                    package_info = self.get_package_info(_req)
-                    config.read_string(os.linesep.join(
-                        package_info.entry_points))
-                    if config.has_section("console_scripts"):
-                        for _cmd in config["console_scripts"]:
-                            self.__cmds.add(_cmd)
+            for package in tuple({"argcomplete", "xarg-python", "xkits", command_project}):  # noqa:E501
+                package_info: Optional[_PackageInfo] = self.get_package_info(package)  # noqa:E501
+                if isinstance(package_info, _PackageInfo):
+                    for _req in set(package_info.required_by):
+                        _package_info: Optional[_PackageInfo] = self.get_package_info(_req)  # noqa:E501
+                        if isinstance(_package_info, _PackageInfo):
+                            config = ConfigParser()
+                            config.read_string(os.linesep.join(_package_info.entry_points))  # noqa:E501
+                            if config.has_section("console_scripts"):
+                                for _cmd in config["console_scripts"]:
+                                    self.__cmds.add(_cmd)
 
     def __new__(cls):
         if not cls.__INSTANCE:
@@ -95,9 +97,12 @@ class Collections:
         return cls.__INSTANCE
 
     @property
-    def cmds(self) -> Iterable[str]:
+    def cmds(self) -> Iterator[str]:
         return iter(self.__cmds)
 
     @classmethod
-    def get_package_info(cls, package_name: str) -> _PackageInfo:
-        return list(search_packages_info([package_name]))[0]
+    def get_package_info(cls, package_name: str) -> Optional[_PackageInfo]:
+        for package_info in search_packages_info([package_name]):
+            if package_info.name == package_name:
+                return package_info
+        return None

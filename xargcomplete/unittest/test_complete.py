@@ -61,5 +61,29 @@ class TestBash(unittest.TestCase):
         self.assertEqual(complete.Bash.list(), {"xsys"})
 
 
+class TestCollections(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        pass
+
+    @classmethod
+    def tearDownClass(cls):
+        pass
+
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
+
+    def test_cmds(self):
+        self.assertIsInstance(complete.Collections().cmds, complete.Iterator)
+
+    def test_get_package_info(self):
+        self.assertIsInstance(complete.Collections.get_package_info(complete.command_project), complete._PackageInfo)  # noqa:E501
+        self.assertIsNone(complete.Collections.get_package_info("ABCDEFGHIJKLMNOPQRSTUVWXYZ"))  # noqa:E501
+
+
 if __name__ == "__main__":
     unittest.main()
