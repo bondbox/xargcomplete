@@ -1,3 +1,3 @@
 # xargcomplete
 
-Tab completion management
+> Tab completion management
