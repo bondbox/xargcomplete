@@ -1,0 +1,30 @@
+name = "xargcomplete"
+home = "https://github.com/bondbox/xargcomplete/"
+description = "Tab completion management"
+keywords = [ "argcomplete", "argparse", "command-line", "completion", "tab-completion",]
+version = "0.2"
+
+[authors.zoumingzhe]
+name = "Mingzhe Zou"
+email = "zoumingzhe@outlook.com"
+
+[packages.xargcomplete]
+requires_python = ">=3.8"
+authors = [ "zoumingzhe",]
+keywords = []
+requirements = [ "xkits-command>=0.7", "tabulate", "pip",]
+max_complexity = 10
+max_line_length = 127
+
+[packages.xargcomplete.modules.xargcomplete]
+base = "xargcomplete"
+omitted = [ "attribute.py", "unittest/*",]
+exclude = [ "unittest",]
+
+[packages.xargcomplete.modules.xargcomplete.include]
+
+[packages.xargcomplete.modules.xargcomplete.scripts]
+xargcomplete = "command:main"
+
+[packages.xargcomplete.modules.xargcomplete.templates]
+"attribute.py" = true

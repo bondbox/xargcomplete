@@ -1,0 +1,43 @@
+[build-system]
+build-backend = "hatchling.build"
+requires = [ "hatch-requirements-txt", "hatchling",]
+
+[project]
+classifiers = [ "Programming Language :: Python", "Programming Language :: Python :: 3",]
+description = "Tab completion management"
+dynamic = [ "dependencies", "version",]
+keywords = [ "argcomplete", "argparse", "command-line", "completion", "tab-completion",]
+license-files = [ "LICENSE",]
+name = "xargcomplete"
+requires-python = ">=3.8"
+[[project.authors]]
+name = "Mingzhe Zou"
+email = "zoumingzhe@outlook.com"
+
+[project.readme]
+content-type = "text/markdown"
+file = "readme.md"
+
+[project.scripts]
+xargcomplete = "xargcomplete.command:main"
+
+[project.urls]
+Homepage = "https://github.com/bondbox/xargcomplete/"
+
+[tool.hatch.version]
+path = "xargcomplete/attribute.py"
+
+[tool.hatch.build.targets.sdist]
+exclude = [ "xargcomplete/unittest",]
+packages = [ "xargcomplete",]
+
+[tool.hatch.build.targets.wheel]
+exclude = [ "xargcomplete/unittest",]
+packages = [ "xargcomplete",]
+
+[tool.hatch.metadata.hooks.requirements_txt]
+files = [ "requirements.txt",]
+
+[tool.hatch.build.targets.sdist.force-include]
+
+[tool.hatch.build.targets.wheel.force-include]

@@ -10,9 +10,9 @@ from typing import Set
 
 from pip._internal.commands.show import _PackageInfo
 from pip._internal.commands.show import search_packages_info
-from xkits_command.attribute import __project__ as command_project
+from xkits_command.attribute import __package_name__ as command_package
 
-from xargcomplete.attribute import __project__
+from xargcomplete.attribute import __package_name__
 
 
 class Bash:
@@ -38,20 +38,20 @@ done
         with open(cls.COMPLETION_PATH, "a", encoding="utf-8") as fh:
             fh.write(f"\n{cls.COMPLETION_CODE}\n")
 
-        cls.update(__project__)
+        cls.update(__package_name__)
 
     @classmethod
     def update(cls, cmd: str) -> int:
         bash_completion_hook = os.path.expanduser(cls.USER_COMPLETION_DIR)
         name = b16encode(cmd.encode()).decode()
-        path = os.path.join(bash_completion_hook, f"{__project__}-{name}")
+        path = os.path.join(bash_completion_hook, f"{__package_name__}-{name}")
         return os.system(f"register-python-argcomplete {cmd} > {path}")
 
     @classmethod
     def remove(cls, cmd: str) -> bool:
         bash_completion_hook = os.path.expanduser(cls.USER_COMPLETION_DIR)
         name = b16encode(cmd.encode()).decode()
-        path = os.path.join(bash_completion_hook, f"{__project__}-{name}")
+        path = os.path.join(bash_completion_hook, f"{__package_name__}-{name}")
         if os.path.isfile(path):
             os.remove(path)
         return not os.path.exists(path)
@@ -66,7 +66,7 @@ done
             if not os.path.isfile(os.path.join(bash_completion_hook, item)):
                 continue
             keys = item.split("-", 1)
-            if len(keys) == 2 and keys[0] == __project__:
+            if len(keys) == 2 and keys[0] == __package_name__:
                 cmds.add(b16decode(keys[1]).decode())
         return cmds
 
@@ -79,7 +79,7 @@ class Collections:
     def __init__(self):
         if not self.__INITIALIZED:  # pylint: disable=too-many-nested-blocks
             self.__cmds: Set[str] = set()
-            for package in tuple({"argcomplete", "xarg-python", "xkits", command_project}):  # noqa:E501
+            for package in tuple({"argcomplete", "xarg-python", "xkits", command_package}):  # noqa:E501
                 package_info: Optional[_PackageInfo] = self.get_package_info(package)  # noqa:E501
                 if isinstance(package_info, _PackageInfo):
                     for _req in set(package_info.required_by):
