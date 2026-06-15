@@ -1,10 +1,11 @@
 # coding:utf-8
 
-__project__ = "xargcomplete"
-__version__ = "0.2"
-__urlhome__ = "https://github.com/bondbox/xargcomplete/"
-__description__ = "Tab completion management"
+# project info
+__project_name__ = "xargcomplete"
+__project_home__ = "https://github.com/bondbox/xargcomplete/"
+__project_desc__ = "Tab completion management"
 
-# author
-__author__ = "Mingzhe Zou"
-__author_email__ = "zoumingzhe@outlook.com"
+# package info
+__version__ = "0.2"
+__package_name__ = "xargcomplete"
+__package_desc__ = "Tab completion management"

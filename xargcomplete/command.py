@@ -18,9 +18,9 @@ from xkits_command import Command
 from xkits_command import CommandArgument
 from xkits_command import CommandExecutor
 
-from xargcomplete.attribute import __description__
-from xargcomplete.attribute import __project__
-from xargcomplete.attribute import __urlhome__
+from xargcomplete.attribute import __package_desc__
+from xargcomplete.attribute import __package_name__
+from xargcomplete.attribute import __project_home__
 from xargcomplete.attribute import __version__
 from xargcomplete.complete import Bash
 from xargcomplete.complete import Collections
@@ -137,7 +137,7 @@ def run_cmd_list(cmds: Command) -> int:
     return 0
 
 
-@CommandArgument(__project__, description=__description__)
+@CommandArgument(__package_name__, description=__package_desc__)
 def add_cmd(_arg: ArgParser):
     pass
 
@@ -154,4 +154,4 @@ def run_cmd(cmds: Command) -> int:
 def main(argv: Optional[Sequence[str]] = None) -> int:
     cmds = Command()
     cmds.version = __version__
-    return cmds.run(root=add_cmd, argv=argv, epilog=f"For more, please visit {__urlhome__}.")  # noqa:E501
+    return cmds.run(root=add_cmd, argv=argv, epilog=f"For more, please visit {__project_home__}.")  # noqa:E501

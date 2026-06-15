@@ -53,7 +53,7 @@ class TestBash(unittest.TestCase):
     def test_list_null(self):
         self.assertEqual(complete.Bash.list(), set())
 
-    @mock.patch.object(complete.os, "listdir", mock.MagicMock(side_effect=[[f"{complete.__project__}-78737973"]]))  # noqa:E501
+    @mock.patch.object(complete.os, "listdir", mock.MagicMock(side_effect=[[f"{complete.__package_name__}-78737973"]]))  # noqa:E501
     @mock.patch.object(complete.os.path, "exists", mock.MagicMock(side_effect=[False]))  # noqa:E501
     @mock.patch.object(complete.os.path, "isfile", mock.MagicMock(return_value=True))  # noqa:E501
     @mock.patch.object(complete.os, "makedirs", mock.MagicMock())
@@ -81,7 +81,7 @@ class TestCollections(unittest.TestCase):
         self.assertIsInstance(complete.Collections().cmds, complete.Iterator)
 
     def test_get_package_info(self):
-        self.assertIsInstance(complete.Collections.get_package_info(complete.command_project), complete._PackageInfo)  # noqa:E501
+        self.assertIsInstance(complete.Collections.get_package_info(complete.command_package), complete._PackageInfo)  # noqa:E501
         self.assertIsNone(complete.Collections.get_package_info("ABCDEFGHIJKLMNOPQRSTUVWXYZ"))  # noqa:E501
 
 
