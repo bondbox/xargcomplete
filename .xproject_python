@@ -8,7 +8,7 @@ keywords = [
     "completion",
     "tab-completion",
 ]
-version = "0.2"
+version = "0.3"
 
 [authors.zoumingzhe]
 name = "Mingzhe Zou"
