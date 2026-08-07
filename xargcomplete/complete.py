@@ -3,7 +3,10 @@
 from base64 import b16decode
 from base64 import b16encode
 from configparser import ConfigParser
+from inspect import signature
 import os
+from typing import Any
+from typing import Dict
 from typing import Iterator
 from typing import Optional
 from typing import Set
@@ -102,7 +105,12 @@ class Collections:
 
     @classmethod
     def get_package_info(cls, package_name: str) -> Optional[_PackageInfo]:
-        for package_info in search_packages_info([package_name]):
+        kwargs: Dict[str, Any] = {}
+
+        if "include_files" in signature(search_packages_info).parameters:
+            kwargs["include_files"] = False  # pragma: no cover
+
+        for package_info in search_packages_info([package_name], **kwargs):
             if package_info.name == package_name:
                 return package_info
         return None
