@@ -6,6 +6,6 @@ __project_home__ = "https://github.com/bondbox/xargcomplete/"
 __project_desc__ = "Tab completion management"
 
 # package info
-__version__ = "0.3"
+__version__ = "0.3.1"
 __package_name__ = "xargcomplete"
 __package_desc__ = "Tab completion management"
