@@ -21,7 +21,7 @@ authors = [
 ]
 keywords = []
 requirements = [
-    "xkits-command>=0.7",
+    "xkits-command>=0.7.1",
     "tabulate",
     "pip",
 ]
